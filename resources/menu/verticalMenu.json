@@ -1,0 +1,79 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "dashboard-analytics"
+    },
+    {
+      "menuHeader": "Pages"
+    },
+    {
+      "name": "Account Settings",
+      "icon": "menu-icon tf-icons bx bx bx-dock-top",
+      "slug": "pages-account-settings",
+      "submenu": [
+        {
+          "url": "/pages/account-settings-account",
+          "name": "Account",
+          "slug": "pages-account-settings-account"
+        },
+        {
+          "url": "/pages/account-settings-notifications",
+          "name": "Notifications",
+          "slug": "pages-account-settings-notifications"
+        },
+        {
+          "url": "/pages/account-settings-connections",
+          "name": "Connections",
+          "slug": "pages-account-settings-connections"
+        }
+      ]
+    }
+    ,{
+        "name": "Clients Account",
+        "icon": "menu-icon tf-icons bx bx bx-dock-top",
+        "slug": "pages-account-settings",
+        "submenu": [
+           {
+            "url": "/clients-requests",
+            "name": "requests",
+            "slug": "pages-account-settings-account"
+          },
+          {
+            "url": "/clients",
+            "name": "Clients",
+            "slug": "pages-account-settings-account"
+          }
+          
+        ]
+      },{
+        "name": "Suppliers",
+        "icon": "menu-icon tf-icons bx bx bx-dock-top",
+        "slug": "pages-account-settings",
+        "submenu": [
+           {
+            "url": "/suppliers",
+            "name": "suppliers",
+            "slug": "pages-account-settings-account"
+          },
+          {
+            "url": "/Supply",
+            "name": "Clients",
+            "slug": "pages-account-settings-account"
+          },
+          {
+            "url": "/pages/account-settings-notifications",
+            "name": "Notifications",
+            "slug": "pages-account-settings-notifications"
+          },
+          {
+            "url": "/pages/account-settings-connections",
+            "name": "Connections",
+            "slug": "pages-account-settings-connections"
+          }
+        ]
+      }
+  ]
+}
