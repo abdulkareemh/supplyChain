@@ -60,13 +60,13 @@ class Product extends Model
         }
     }
 
-    public function getSupplierIdAttribute()
-    {
-        try {
-            return Supplier::where('id', $this->id)->first()->name;
-        } catch (Exception $e) {
-            return null;
-        }
-    }
+    // public function getSupplierIdAttribute()
+    // {
+    //     try {
+    //         return Supplier::where('id', $this->id)->first()->name;
+    //     } catch (Exception $e) {
+    //         return null;
+    //     }
+    // }
     
 }

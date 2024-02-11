@@ -15,7 +15,7 @@ class ShowController extends Controller
     }
 
     function supplyIndex($id) {
-        $supplier = Supplier::where('id',$id)->with('products')->get();
+        $supplier = Supplier::where('id',$id)->with('products')->first();
         return $supplier;
     }
 }
