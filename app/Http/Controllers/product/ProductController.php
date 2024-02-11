@@ -14,7 +14,7 @@ class ProductController extends Controller
         try {
             $products = Product::with(['prices' => function ($query) {
                 $query->orderBy('created_at', 'asc'); // or any other order you prefer
-            }])->paginate(10);
+            }])->with('images')->paginate(10);
 
             // Adding the first price to each product
             $products->each(function ($product) {
@@ -31,7 +31,7 @@ class ProductController extends Controller
     function productIndex($id)
     {
         try {
-            $product = Product::where('id', $id)->with('prices')->firstOrFail();
+            $product = Product::where('id', $id)->with('prices', 'images')->firstOrFail();
             $transformedProduct = [
                 'id' => $product->id,
                 'name' => $product->name,
@@ -39,7 +39,15 @@ class ProductController extends Controller
                 'quantity' => $product->quantity,
                 'category_id' => $product->category_id,
                 'supplier_id' => $product->supplier_id,
-                'price' => $product->prices->sortBy('created_at')->first()->price ?? null,
+                'p_price' => $product->prices->sortBy('created_at')->first()->price ?? null,
+                'price' => $product->price,
+                'images' => $product->images->map(function($image) {
+                    return [
+                        'url' => $image->image_url,
+                        'product_id'=>$image->product_id,
+                        // include any other image attributes you need
+                    ];
+                })->toArray(),
                 // include any other attributes you want to return
             ];
             return $transformedProduct;
