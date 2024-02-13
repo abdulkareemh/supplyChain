@@ -30,7 +30,7 @@ Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@
 Route::get('/auth/register-basic', $controller_path . '\authentications\RegisterBasic@index')->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', $controller_path . '\authentications\ForgotPasswordBasic@index')->name('auth-reset-password-basic');
 
-// Route::middleware(['auth', 'second'])->group(function () {
+// Route::middleware(['auth'])->group(function () {
     Route::resource('clients', ClientController::class)->except([
          'destroy','show'
     ]);

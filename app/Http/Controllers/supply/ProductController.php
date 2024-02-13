@@ -8,7 +8,7 @@ use App\Models\Price;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -52,7 +52,7 @@ class ProductController extends Controller
             'price' => 'nullable|integer',
             'p_price' => 'required',
             'images' => 'nullable|array', // if multiple images
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validation for each image
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg', // validation for each image
         ]);
         
         if ($validator->fails()) {
@@ -69,20 +69,28 @@ class ProductController extends Controller
             'price' => $request->price,
         ]);
         Price::created([
-            'prise' => $request->p_price,
+            'price' => $request->p_price,
             'product_id' => $product->id,
         ]);
         // Handle image upload
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/storage/products'); // storing images in 'public/images'
+                // Generate a new filename. For example, using the original filename with a unique ID
+                $newFileName = 'product_' . $product->id . '_' . time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+        
+                // Store the file with the new name in the desired directory
+                $path = $image->storeAs('public/products', $newFileName);
+        
+                // Optionally, you can modify the $path here before storing it in the database
+                // For example, if you want to remove 'public/' from the path
+                $databasePath = Str::replaceFirst('public/', 'storage/', $path);
+        
                 Images::create([
                     'product_id' => $product->id,
-                    'image_url' => $path
+                    'image_url' => $databasePath // Use the modified path
                 ]);
             }
         }
-
         return response()->json(['message' => 'Product created successfully.', 'product' => $product], 201);
     }
 
@@ -144,7 +152,8 @@ class ProductController extends Controller
         }
         $price = Price::where('product_id', $product->id)->first();
         if ($request->hasfile('p_price')) {
-            $price->update($request->only(['p_price']));
+            $price->update([
+            'price' => $request->p_price]);
             
         }
         // Update the product
@@ -154,10 +163,19 @@ class ProductController extends Controller
         // Handle image uploads
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/images'); // storing images in 'public/images'
+                // Generate a new filename. For example, using the original filename with a unique ID
+                $newFileName = 'product_' . $product->id . '_' . time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+        
+                // Store the file with the new name in the desired directory
+                $path = $image->storeAs('public/products', $newFileName);
+        
+                // Optionally, you can modify the $path here before storing it in the database
+                // For example, if you want to remove 'public/' from the path
+                $databasePath = Str::replaceFirst('public/', 'storage/', $path);
+        
                 Images::create([
                     'product_id' => $product->id,
-                    'image_url' => $path
+                    'image_url' => $databasePath // Use the modified path
                 ]);
             }
         }

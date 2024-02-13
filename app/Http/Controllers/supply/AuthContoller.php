@@ -26,7 +26,7 @@ class AuthContoller extends Controller
                     'commercial_register_number' => 'nullable', // Add validation rules as needed
                     'commercial_register_image' => 'image', // Add validation rules as needed
                     'company_image' => 'image', // Add validation rules as needed
-                    'category' => 'nullable' // Add validation rules as needed
+                    'category' => 'required' // Add validation rules as needed
                 ]
             );
 

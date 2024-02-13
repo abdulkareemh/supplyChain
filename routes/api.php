@@ -42,7 +42,7 @@ Route::prefix('supply')->group(function () {
     Route::middleware('auth:supply')->resource('/products',SupplyProductController::class);
 
     Route::middleware('auth:supply')->get('/account',[AccountController::class,'index']);
-    Route::middleware('auth:supply')->get('/account-update',[AccountController::class,'update']);
+    Route::middleware('auth:supply')->post('/account-update/{id}',[AccountController::class,'update']);
 
 });
 
