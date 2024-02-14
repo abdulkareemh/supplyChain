@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Images;
 use App\Models\Price;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -20,8 +21,21 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $id = $request->user()->id;
-        $products = Product::where('supply_id', $id)->all();
-        return $products;
+        try {
+            $products = Product::where('supplier_id',$id)->with(['prices' => function ($query) {
+                $query->orderBy('created_at', 'asc'); // or any other order you prefer
+            }])->with('images')->paginate(10);
+
+            // Adding the first price to each product
+            $products->each(function ($product) {
+                $product->p_price = $product->prices->first()->price ?? null;
+                $product->makeHidden('prices');
+            });
+
+            return $products;
+        } catch (Exception $e) {
+            return response('try next time', 300);
+        }
     }
 
     /**
@@ -68,10 +82,11 @@ class ProductController extends Controller
             'supplier_id' => $request->supplier_id,
             'price' => $request->price,
         ]);
-        Price::created([
+        Price::create([
             'price' => $request->p_price,
             'product_id' => $product->id,
         ]);
+        
         // Handle image upload
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $image) {
@@ -102,8 +117,30 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::where('id', $id)->with('images')->first();
-        return $product;
+        try {
+            $product = Product::where('id', $id)->with('prices', 'images')->firstOrFail();
+            $transformedProduct = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'quantity' => $product->quantity,
+                'category_id' => $product->category_id,
+                'supplier_id' => $product->supplier_id,
+                'p_price' => $product->prices->sortBy('created_at')->first()->price ?? null,
+                'price' => $product->price,
+                'images' => $product->images->map(function($image) {
+                    return [
+                        'url' => $image->image_url,
+                        'product_id'=>$image->product_id,
+                        // include any other image attributes you need
+                    ];
+                })->toArray(),
+                // include any other attributes you want to return
+            ];
+            return $transformedProduct;
+        } catch (Exception $e) {
+            return response('try next time', 300);
+        }
     }
 
     /**

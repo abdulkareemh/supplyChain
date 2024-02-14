@@ -39,7 +39,8 @@ Route::prefix('supply')->group(function () {
     Route::middleware('auth:supply')->get('/orders',[SupplyOrderController::class,'orders']);
     Route::middleware('auth:supply')->post('/accept-order',[SupplyOrderController::class,'accept']);
 
-    Route::middleware('auth:supply')->resource('/products',SupplyProductController::class);
+    Route::middleware('auth:supply')->resource('/products',SupplyProductController::class)
+        ->except('edit','create');
 
     Route::middleware('auth:supply')->get('/account',[AccountController::class,'index']);
     Route::middleware('auth:supply')->post('/account-update/{id}',[AccountController::class,'update']);
