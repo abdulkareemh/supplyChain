@@ -63,6 +63,7 @@ class OrderController extends Controller
             }
             $order = new Order;
             $order->client_id = $clientId;
+            $order->supplier_id = $request->supplier_id;
             $order->total = 0;
             $order->save();
             $orderId = $order->id;
