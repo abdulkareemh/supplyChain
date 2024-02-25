@@ -10,6 +10,7 @@ use App\Http\Controllers\supply\AccountController;
 use App\Http\Controllers\supply\AuthContoller as SupplyAuthContoller;
 use App\Http\Controllers\supply\OrderController as SupplyOrderController;
 use App\Http\Controllers\supply\ProductController as SupplyProductController;
+use App\Http\Controllers\supply\ServiceLocatinoController;
 use App\Http\Controllers\supply\ShowController;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -36,6 +37,9 @@ Route::prefix('supply')->group(function () {
     Route::post('register', [SupplyAuthContoller::class,'register']);
     Route::middleware('auth:supply')->post('logout', [SupplyAuthContoller::class,'logout']);
     
+    Route::middleware('auth:supply')->get('/service_location',[ServiceLocatinoController::class, 'index']);
+    Route::middleware('auth:supply')->post('/service_location',[ServiceLocatinoController::class, 'createOrUpdate']);
+
     Route::middleware('auth:supply')->get('/orders',[SupplyOrderController::class,'orders']);
     Route::middleware('auth:supply')->post('/accept-order',[SupplyOrderController::class,'accept']);
 

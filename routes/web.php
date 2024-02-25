@@ -26,7 +26,7 @@ $controller_path = 'App\Http\Controllers';
 Route::get('/', $controller_path . '\dashboard\Analytics@index')->name('dashboard-analytics');
 
 // authentication
-Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@index')->name('auth-login-basic');
+Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@index')->name('login');
 Route::get('/auth/register-basic', $controller_path . '\authentications\RegisterBasic@index')->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', $controller_path . '\authentications\ForgotPasswordBasic@index')->name('auth-reset-password-basic');
 
