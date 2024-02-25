@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('commercial_register_image')->nullable();
             $table->string('company_image')->nullable();
-            $table->string('category');
+            $table->string('category')->nullable();
+            $table->string('description')->nullable();
         });
     }
 

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('supplier_id')->unsigned();
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->bigInteger('total');
-            $table->date('Expected_delivery_date');
+            $table->date('Expected_delivery_date')->nullable();
             $table->enum('status',['pending','accept','cancel']);
         });
     }

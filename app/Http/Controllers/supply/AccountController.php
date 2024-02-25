@@ -42,7 +42,8 @@ class AccountController extends Controller
             'phone' => 'sometimes|required',
             'commercial_register_image' => 'nullable', // Add validation rules if needed
             'company_image' => 'nullable', // Add validation rules if needed
-            'category' => 'sometimes|required'
+            'category' => 'sometimes|required',
+            'description' => 'sometimes|required'
         ]);
 
         if ($validator->fails()) {

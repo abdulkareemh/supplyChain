@@ -14,7 +14,7 @@ class ServiceArea extends Model
         'name',
         'supply_id',
     ];
-
+    public $timestamps = false;
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);

@@ -22,6 +22,7 @@ class Supplier extends Model
         'commercial_register_image',
         'company_image',
         'category',
+        'description',
     ];
 
 
@@ -37,7 +38,7 @@ class Supplier extends Model
 
     public function serviceAreas(): HasMany
     {
-        return $this->hasMany(ServiceArea::class);
+        return $this->hasMany(ServiceArea::class,'supply_id','id');
     }
 
     public function products(): HasMany

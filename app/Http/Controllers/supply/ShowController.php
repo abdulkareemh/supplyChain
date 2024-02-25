@@ -11,7 +11,7 @@ class ShowController extends Controller
 
     function index()
     {
-        $suppliers = Supplier::get();
+        $suppliers = Supplier::with('serviceAreas')->get();
         return $suppliers;
     }
 
@@ -23,6 +23,7 @@ class ShowController extends Controller
                     $query->orderBy('created_at', 'asc');
                 }, 'images']);
             }])
+            ->with('serviceAreas')
             ->first();
 
         // Adding the first price to each product

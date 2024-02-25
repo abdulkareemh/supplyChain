@@ -24,7 +24,7 @@ class ProductController extends Controller
         try {
             $products = Product::where('supplier_id',$id)->with(['prices' => function ($query) {
                 $query->orderBy('created_at', 'asc'); // or any other order you prefer
-            }])->with('images')->paginate(10);
+            }])->with('images')->get();
 
             // Adding the first price to each product
             $products->each(function ($product) {
