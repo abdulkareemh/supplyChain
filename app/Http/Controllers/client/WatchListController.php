@@ -11,7 +11,7 @@ class WatchListController extends Controller
 {
     function get_list(Request $request) {
         $id =$request->user()->id;
-        $list = Client::where('id',$id)->first()->product_list;
+        $list = Client::select('product_list')->where('id',$id)->first();
         return $list;
     }
 
@@ -22,7 +22,7 @@ class WatchListController extends Controller
         ]);
         $id =$request->user()->id;
         Client::where('id',$id)->update(['product_list'=> $request->product_list]);
-        $list = Client::where('id',$id)->first()->product_list;
+        $list = Client::select('product_list')->where('id',$id)->first();
         return $list;
     }
 
