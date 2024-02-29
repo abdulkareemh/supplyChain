@@ -17,7 +17,7 @@ class WatchListController extends Controller
 
     function update_list(Request $request) {
         $validated = $request->validate([
-            'product_list' => 'required|array',
+            'product_list' => 'sometimes|array',
             'product_list.*' => 'integer|exists:products,id',
         ]);
         $id =$request->user()->id;

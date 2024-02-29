@@ -13,7 +13,7 @@ class ClientRequest extends FormRequest
      */
     public function authorize() //do not forget to change it to false
     {
-        return false;
+        return true;
     }
 
     /**
