@@ -25,7 +25,7 @@ class OrderController extends Controller
     function orders(Request $request)
     {
         $id = $request->user()->id;
-        $orders = Order::where('supplier_id', $id)->get();
+        $orders = Order::where('supplier_id', $id)->with('products')->get();
         return $orders;
     }
 }
