@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    function accept(Request $request, $id)
+    function accept(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
             'Expected_delivery_date' => 'date|nullable',
-            'status' => 'required|in:accept,cancel'
+            'status' => 'required|in:accept,cancel',
+            'order_id' => 'required|exists:orders,id',
         ]);
-        $order = Order::findOrfail($id);
+        $order = Order::findOrfail($request->order_id);
         $order->update($request->only(['status', 'Expected_delivery_date']));
         return response()->json(['message' => 'Order updated successfully.'], 200);
     }
