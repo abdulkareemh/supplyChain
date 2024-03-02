@@ -70,7 +70,7 @@ class OrderController extends Controller
             foreach ($validatedOrder as $item) {
                 DB::table('order_product')->insert([
                     'order_id' => $orderId,
-                    'product_id' => $clientId,
+                    'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price']
                 ]);
